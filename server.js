@@ -6,7 +6,7 @@ const multer = require("multer");
 const axios = require("axios");
 const FormData = require('form-data'); // Required for Imgur upload
 const fs = require("fs");
-const bcrypt = require("bcrypt");
+const bcryptjs = require("bcryptjs");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cloudinary = require("cloudinary").v2;
 
@@ -121,7 +121,7 @@ app.post("/admin-signup", async (req, res) => {
         if (existingAdmin) return res.status(400).json({ error: "Admin already exists!" });
 
         // Hash password
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcryptjs.hash(password, 10);
 
         // Create Admin Auth Record
         const newAdmin = new AdminAuth({ name, email, password: hashedPassword });
@@ -144,7 +144,7 @@ app.post("/admin-login", async (req, res) => {
         
         if (!admin) return res.status(401).json({ error: "Invalid email or password!" });
 
-        const passwordMatch = await bcrypt.compare(password, admin.password);
+        const passwordMatch = await bcryptjs.compare(password, admin.password);
         if (!passwordMatch) return res.status(401).json({ error: "Invalid email or password!" });
 
         console.log("✅ Admin Found:", admin);  // Debug: Check the actual admin document
