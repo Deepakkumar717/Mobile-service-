@@ -7,7 +7,6 @@ const axios = require("axios");
 const FormData = require('form-data'); // Required for Imgur upload
 const fs = require("fs");
 const bcrypt = require("bcrypt");
-const bcrypt = require("bcryptjs");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const cloudinary = require("cloudinary").v2;
 
